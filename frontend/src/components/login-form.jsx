@@ -55,7 +55,7 @@ const Login = () => {
         toast.success("User Login Succssfull");
         console.log(userData, response);
         setSession(response.data);
-        navigate("/dashboard");
+        navigate("/interviews");
       },
     });
   };
