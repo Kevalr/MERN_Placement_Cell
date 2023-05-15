@@ -17,7 +17,7 @@ const Sidebar = () => {
 
   return (
     <>
-      <aside className="bg-slate-950 text-white flex-shrink-0 w-48 block bg-primary py-4 overflow-y-auto z-20">
+      <aside className="fixed bg-slate-950 text-white flex-shrink-0 w-48 block bg-primary py-4 overflow-y-auto z-20">
         <div className="flex justify-center items-center h-10 text-2xl font-semibold text-blue-300 mt-2">
           <h3>Placement Cell</h3>
         </div>

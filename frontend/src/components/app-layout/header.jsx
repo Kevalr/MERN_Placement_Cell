@@ -21,7 +21,7 @@ const Header = () => {
 
   return (
     <>
-      <header className="items-center fixed h-20 bg-blue-300 px-5 py-4 flex w-[calc(100%_-_8rem)]">
+      <header className="items-center fixed h-20 bg-blue-300 px-5 py-4 flex w-[calc(100%_-_8rem)] z-20">
         <div className="w-2/5 flex items-center">
           <p className="text-2xl font-semibold text-black-light">
             Admin Panel - RK Ninjas - Placement cell
