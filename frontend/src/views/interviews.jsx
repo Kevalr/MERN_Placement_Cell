@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Loader from "../components/common/Loader";
 import { useNavigate } from "react-router-dom";
 import { useDeleteStudent } from "../hooks/students";
@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import { useDeleteInterview, useGetAllInterviews } from "../hooks/interviews";
 import useModal from "../hooks/use-modal";
 import StudentsModal from "../components/studentsModal";
+import UpdateInterviewStudentStatusForm from "../components/updateInterviewStudentStatus";
 const Interviews = () => {
   const navigate = useNavigate();
 
@@ -29,6 +30,8 @@ const Interviews = () => {
     }
   };
 
+  const [selectedInterview, setSelectedInterview] = useState(null);
+
   const { isOpen, openModal, onRequestClose } = useModal();
   const changeStudentStatusFormID = "changeStudentStatus";
 
@@ -45,7 +48,7 @@ const Interviews = () => {
         </h2>
         <button
           type="button"
-          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+          className="text-white bg-blue-400 hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2  focus:outline-none dark:focus:ring-blue-800"
           onClick={() =>
             navigate("/interviews-create-update/", { state: { id: null } })
           }
@@ -94,7 +97,10 @@ const Interviews = () => {
                       </td>
                       <td
                         className="whitespace-nowrap px-6 py-4"
-                        onClick={openModal}
+                        onClick={() => {
+                          setSelectedInterview(interview._id);
+                          openModal();
+                        }}
                       >
                         {"View Students"}
                       </td>
@@ -128,10 +134,14 @@ const Interviews = () => {
                 <StudentsModal
                   isOpen={isOpen}
                   onRequestClose={onRequestClose}
-                  submitButtonProps={{ FORM_ID: changeStudentStatusFormID }}
+                  submitButtonProps={{ form_id: changeStudentStatusFormID }}
                   title="Update Student Status"
                 >
-                  <h1>Hello brother</h1>
+                  <UpdateInterviewStudentStatusForm
+                    id={selectedInterview}
+                    form_id={changeStudentStatusFormID}
+                    onRequestClose={onRequestClose}
+                  />
                 </StudentsModal>
               )}
             </div>

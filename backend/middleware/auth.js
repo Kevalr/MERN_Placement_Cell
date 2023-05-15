@@ -7,7 +7,7 @@ exports.isAuthenticatedUser = (req, res, next) => {
   if (authorizationHeader) {
     //spillting and getting token from bearer token string
     const token = authorizationHeader.split(" ")[1];
-
+    console.log(token, " --------evdgv");
     try {
       //verifying token
       var decoded = jwt.verify(token, "nothing");

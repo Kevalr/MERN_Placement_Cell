@@ -54,7 +54,7 @@ const StudentsModal = ({
                 type="submit"
                 {...submitButtonProps}
               >
-                ADD STUDENTS
+                SUBMIT
               </button>
             </div>
           </div>

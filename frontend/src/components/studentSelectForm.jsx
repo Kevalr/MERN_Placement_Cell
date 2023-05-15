@@ -67,7 +67,12 @@ const StudentSelectForm = ({
     console.log(data, "selected Students");
     onRequestClose();
   };
-  if (isStudentListLoading) return <Loader />;
+  if (isStudentListLoading)
+    return (
+      <div className="h-56">
+        <Loader />
+      </div>
+    );
 
   return (
     <>
@@ -80,10 +85,9 @@ const StudentSelectForm = ({
         <div className="w-full text-lg">
           {studentListWithSelectedStudent.length > 0 &&
             studentListWithSelectedStudent?.map((student, index) => (
-              <>
+              <div key={student._id}>
                 <div className="inline-block w-2/12 pl-5 m-2">
                   <input
-                    key={student._id}
                     type="checkbox"
                     value={student._id}
                     {...register("test")}
@@ -92,7 +96,7 @@ const StudentSelectForm = ({
                 <label className="w-4/12 inline-block">{student.name} </label>
                 <label className="w-6/12">{student.collage}</label>
                 <hr />
-              </>
+              </div>
             ))}
         </div>
       </form>
