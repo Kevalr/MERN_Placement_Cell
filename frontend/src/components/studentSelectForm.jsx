@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useGetAllStudents } from "../hooks/students";
 import Loader from "./common/Loader";
 import { useForm } from "react-hook-form";
@@ -14,6 +14,7 @@ const StudentSelectForm = ({
     useGetAllStudents();
 
   const {
+    reset,
     register,
     handleSubmit,
     // reset: resetStudents,
@@ -22,47 +23,38 @@ const StudentSelectForm = ({
   });
 
   //pela selected add kari devana, pachi normal add karavana , if ae student already selected ma na hoy to
+  const [studentListWithSelectedStudent, setStudentListWithSelectedStudent] =
+    useState([]);
 
   const formatStudentList = () => {
     debugger;
-    let formattedStudentList = [
-      selectedStudentList.map((student) => student.id._id),
-    ];
+    let formattedStudentDetailsList = selectedStudentList.map((student) => ({
+      ...student.id,
+      selected: true,
+    }));
+
     for (let student of studentList.data) {
-      debugger;
-      console.log(student);
-      console.log(formattedStudentList.includes(student._id), " - found");
+      let res = formattedStudentDetailsList.some(
+        (formattedStudent) => formattedStudent._id === student._id
+      );
+
+      if (!res) {
+        formattedStudentDetailsList.push({ ...student, selected: false });
+      }
     }
-    //     let selectedStudent = interviewDetails?.data?.students;
-    //     let formattedStudentList = [];
-    //     studentList.data.map((student) => {
-    //       if (
-    //         selectedStudent.find(
-    //           (selectedStudent) => selectedStudent.id._id === student._id
-    //         )
-    //       ) {
-    //         formattedStudentList.push({ ...student, selected: true });
-    //       } else {
-    //         formattedStudentList.push({ ...student, selected: false });
-    //       }
-    //       return "";
-    //     });
-    //     studentList = formattedStudentList;
-    //   };
-    //   if (
-    //     !isStudentListLoading &&
-    //     studentList.data.length > 0 &&
-    //     !isInterviewDetailsLoading &&
-    //     interviewDetails
-    //   ) {
-    //     formatStudentList();
-    //     console.log("studeee", studentList);
+
+    setStudentListWithSelectedStudent(formattedStudentDetailsList);
+
+    //filtering the selected students and then returning its id to test using map method
+    reset({
+      test: formattedStudentDetailsList
+        .filter((student) => student.selected === true)
+        .map((student) => student._id),
+    });
   };
 
   useEffect(() => {
     if (studentList?.data.length > 0 && selectedStudentList?.length > 0) {
-      console.log(studentList);
-      console.log(selectedStudentList);
       formatStudentList();
     }
     return;
@@ -78,21 +70,21 @@ const StudentSelectForm = ({
   return (
     <>
       <form id={formID} onSubmit={handleSubmit(onSubmit)}>
-        {studentList.data?.map((student, index) => (
-          <>
-            <input
-              key={student._id}
-              type="checkbox"
-              checked={student.selected}
-              //   checked={index == 1}
-              value={student._id}
-              {...register("test")}
-            />
-            <label>{student.name} </label>
-            <label>{student.collage}</label>
-            <br />
-          </>
-        ))}
+        {studentListWithSelectedStudent.length > 0 &&
+          studentListWithSelectedStudent?.map((student, index) => (
+            <>
+              <h3>student - {student._id}</h3>
+              <input
+                key={student._id}
+                type="checkbox"
+                value={student._id}
+                {...register("test")}
+              />
+              <label>{student.name} </label>
+              <label>{student.collage}</label>
+              <br />
+            </>
+          ))}
       </form>
     </>
   );

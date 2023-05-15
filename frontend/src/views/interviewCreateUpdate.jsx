@@ -36,7 +36,7 @@ const Input = ({ label, name, register, required, placeholder }) => (
 const InterviewCreateUpdate = () => {
   //Fetching id from the state using location
   const { state } = useLocation();
-  console.log(state.id);
+  // console.log(state.id);
 
   const navigate = useNavigate();
 
@@ -117,7 +117,7 @@ const InterviewCreateUpdate = () => {
       requiredTechnogies: createArrayOfcreateRequiredTech(
         data.requiredTechnogies
       ),
-      students: selectedStudentList,
+      students: selectedStudentList.map((student) => ({ id: student })),
     };
 
     console.log(payload);
@@ -189,7 +189,7 @@ const InterviewCreateUpdate = () => {
                   <div className="relative w-1/3 mb-3 self-end">
                     <button
                       type="button"
-                      class="px-4 py-3 w-full bg-gray-800 hover:bg-gray-900 hover:scale-110 transition-transform ease-in-out text-white font-medium rounded-md"
+                      className="px-4 py-3 w-full bg-gray-800 hover:bg-gray-900 hover:scale-110 transition-transform ease-in-out text-white font-medium rounded-md"
                       onClick={openModal}
                     >
                       Select Students &nbsp; &#8594;
@@ -197,32 +197,42 @@ const InterviewCreateUpdate = () => {
                   </div>
                 </div>
 
-                <div className="flex justify-center w-full mt-5 ">
-                  <div class="border-2 w-1/3 text-center text-lg font-bold hover:border-yellow-600 rounded-lg px-6 py-2 hover:bg-white hover:text-yellow-600 cursor-pointer bg-yellow-600 text-black">
-                    <button type="submit">
-                      {state.id ? "UPDATE" : "CREATE"} Interview
-                    </button>
-                  </div>
+                <div className="flex justify-around w-full mt-5 ">
+                  <button
+                    type="button"
+                    className="border-2 w-1/3 font-bold px-6 py-2 text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-lg mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+                    onClick={() => navigate(-1)}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="border-2 w-1/3 text-center text-lg font-bold hover:border-yellow-600 rounded-lg px-6 py-2 hover:bg-white hover:text-yellow-600 cursor-pointer bg-yellow-600 text-black"
+                  >
+                    {state.id ? "UPDATE" : "CREATE"} Interview
+                  </button>
                   {/* </div> */}
                 </div>
               </div>
             </form>
           </div>
 
-          <StudentsModal
-            isOpen={isOpen}
-            onRequestClose={onRequestClose}
-            submitButtonProps={{
-              form: studentSelect_Form_ID,
-            }}
-          >
-            <StudentSelectForm
+          {isOpen && (
+            <StudentsModal
+              isOpen={isOpen}
               onRequestClose={onRequestClose}
-              selectedStudentList={selectedStudentList}
-              setSelectedStudentList={setSelectedStudentList}
-              formID={studentSelect_Form_ID}
-            />
-          </StudentsModal>
+              submitButtonProps={{
+                form: studentSelect_Form_ID,
+              }}
+            >
+              <StudentSelectForm
+                onRequestClose={onRequestClose}
+                selectedStudentList={selectedStudentList}
+                setSelectedStudentList={setSelectedStudentList}
+                formID={studentSelect_Form_ID}
+              />
+            </StudentsModal>
+          )}
         </div>
       </div>
     </section>

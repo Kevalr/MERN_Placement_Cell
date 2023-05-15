@@ -6,29 +6,31 @@ import trash from "../assets/delete.png";
 import edit from "../assets/edit.png";
 import { invalidateQuery } from "../config/react-query-client";
 import { toast } from "react-toastify";
-import { useGetAllInterviews } from "../hooks/interviews";
+import { useDeleteInterview, useGetAllInterviews } from "../hooks/interviews";
 import useModal from "../hooks/use-modal";
+import StudentsModal from "../components/studentsModal";
 const Interviews = () => {
   const navigate = useNavigate();
 
   var { data: interviewsList, isLoading } = useGetAllInterviews();
 
-  const { mutate: deleteStudent } = useDeleteStudent();
+  const { mutate: deleteInterview } = useDeleteInterview();
   const handleDelete = (id) => {
     const confirmDelete = window.confirm(
-      "Are You Sure You Want to delete this student"
+      "Are You Sure You Want to delete this Interview"
     );
     if (confirmDelete) {
-      deleteStudent(id, {
+      deleteInterview(id, {
         onSuccess: () => {
-          invalidateQuery(["students"]);
-          toast.success("Student Deleted Successfully");
+          invalidateQuery(["interviews"]);
+          toast.success("interview Deleted Successfully");
         },
       });
     }
   };
 
   const { isOpen, openModal, onRequestClose } = useModal();
+  const changeStudentStatusFormID = "changeStudentStatus";
 
   interviewsList && console.log(interviewsList.data);
   if (isLoading) return <Loader />;
@@ -38,7 +40,9 @@ const Interviews = () => {
   return (
     <div>
       <div className="flex justify-between items-center pb-3">
-        <h2 className="text-2xl text pl-4 font-bold">Students</h2>
+        <h2 className="text-2xl text pl-4 font-bold text-gray-900">
+          INTERVIEWS
+        </h2>
         <button
           type="button"
           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
@@ -90,13 +94,9 @@ const Interviews = () => {
                       </td>
                       <td
                         className="whitespace-nowrap px-6 py-4"
-                        onClick={() =>
-                          window.alert(
-                            "Modal to  change student status with student name and collage and radios for status"
-                          )
-                        }
+                        onClick={openModal}
                       >
-                        {"View Student Icon"}
+                        {"View Students"}
                       </td>
                       <td className="whitespace-nowrap px-6 py-4">
                         <img
@@ -124,6 +124,16 @@ const Interviews = () => {
                   ))}
                 </tbody>
               </table>
+              {isOpen && (
+                <StudentsModal
+                  isOpen={isOpen}
+                  onRequestClose={onRequestClose}
+                  submitButtonProps={{ FORM_ID: changeStudentStatusFormID }}
+                  title="Update Student Status"
+                >
+                  <h1>Hello brother</h1>
+                </StudentsModal>
+              )}
             </div>
           </div>
         </div>

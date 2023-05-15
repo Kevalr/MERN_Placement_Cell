@@ -8,8 +8,10 @@ const getInterviewByID = ({ queryKey }) =>
 const createInterview = (payload) =>
   axiosClient.post("interviews/create", payload);
 
-const updateInterview = (payload) =>
-  axiosClient.put(`interviews/update/${payload.id}`, payload);
+const updateInterview = (payload) => {
+  console.log(payload);
+  return axiosClient.put(`interviews/update/${payload.id}`, payload);
+};
 
 const deleteInterview = (id) => axiosClient.delete(`interviews/delete/${id}`);
 

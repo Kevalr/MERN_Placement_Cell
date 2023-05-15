@@ -6,6 +6,7 @@ const StudentsModal = ({
   onRequestClose,
   children,
   submitButtonProps,
+  title,
 }) => {
   return (
     <div
@@ -35,7 +36,7 @@ const StudentsModal = ({
           <div className="max-h-[calc(100vh-100px)] overflow-y-auto">
             <div className="sticky top-0 left-0 bg-white text-left border-b border-gray">
               <p className="text-xl font-semibold text-black-light">
-                ADD Students
+                {title ? title : "ADD Students"}
               </p>
             </div>
             <div className="my-3">{children}</div>
