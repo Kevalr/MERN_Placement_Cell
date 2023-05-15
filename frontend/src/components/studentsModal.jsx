@@ -35,13 +35,13 @@ const StudentsModal = ({
           </button>
           <div className="max-h-[calc(100vh-100px)] overflow-y-auto">
             <div className="sticky top-0 left-0 bg-white text-left border-b border-gray">
-              <p className="text-xl font-semibold text-black-light">
+              <p className="text-2xl text-center mb-4 font-semibold text-black-light">
                 {title ? title : "ADD Students"}
               </p>
             </div>
             <div className="my-3">{children}</div>
 
-            <div className="sticky bottom-0 left-0 flex justify-end pr-3 bg-white border-t border-gray">
+            <div className="sticky bottom-0 left-0 flex justify-center pr-3 bg-white border-t border-gray">
               <button
                 type="button"
                 onClick={onRequestClose}
@@ -50,7 +50,7 @@ const StudentsModal = ({
                 Cancel
               </button>
               <button
-                className="mt-3 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                className="mt-3 h-10 text-white bg-blue-300 hover:bg-blue-500 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-500 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
                 type="submit"
                 {...submitButtonProps}
               >

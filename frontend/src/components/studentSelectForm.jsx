@@ -56,6 +56,8 @@ const StudentSelectForm = ({
   useEffect(() => {
     if (studentList?.data.length > 0 && selectedStudentList?.length > 0) {
       formatStudentList();
+    } else if (studentList?.data.length > 0) {
+      setStudentListWithSelectedStudent(studentList.data);
     }
     return;
   }, [studentList]);
@@ -69,22 +71,30 @@ const StudentSelectForm = ({
 
   return (
     <>
-      <form id={formID} onSubmit={handleSubmit(onSubmit)}>
-        {studentListWithSelectedStudent.length > 0 &&
-          studentListWithSelectedStudent?.map((student, index) => (
-            <>
-              <h3>student - {student._id}</h3>
-              <input
-                key={student._id}
-                type="checkbox"
-                value={student._id}
-                {...register("test")}
-              />
-              <label>{student.name} </label>
-              <label>{student.collage}</label>
-              <br />
-            </>
-          ))}
+      <form id={formID} onSubmit={handleSubmit(onSubmit)} className="w-full">
+        <div className="w-full  font-bold text-xl text-blue-300">
+          <label className="inline-block w-2/12">Status</label>
+          <label className="inline-block w-4/12">Name</label>
+          <label className="inline-block w-6/12">Collage</label>
+        </div>
+        <div className="w-full text-lg">
+          {studentListWithSelectedStudent.length > 0 &&
+            studentListWithSelectedStudent?.map((student, index) => (
+              <>
+                <div className="inline-block w-2/12 pl-5 m-2">
+                  <input
+                    key={student._id}
+                    type="checkbox"
+                    value={student._id}
+                    {...register("test")}
+                  />
+                </div>
+                <label className="w-4/12 inline-block">{student.name} </label>
+                <label className="w-6/12">{student.collage}</label>
+                <hr />
+              </>
+            ))}
+        </div>
       </form>
     </>
   );

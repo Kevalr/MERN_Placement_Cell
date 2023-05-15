@@ -180,7 +180,7 @@ const InterviewCreateUpdate = () => {
                   <div className="relative w-1/3 mb-3 self-end">
                     <button
                       type="button"
-                      className="px-4 py-3 w-full bg-gray-800 hover:bg-gray-900 hover:scale-110 transition-transform ease-in-out text-white font-medium rounded-md"
+                      className="px-4 py-3 w-full bg-blue-500 hover:bg-blue-700 hover:scale-110 transition-transform ease-in-out text-white font-medium rounded-md"
                       onClick={openModal}
                     >
                       Select Students &nbsp; &#8594;
