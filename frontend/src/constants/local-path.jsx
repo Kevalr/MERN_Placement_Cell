@@ -1,4 +1,5 @@
 import Login from "../components/login-form";
+import Register from "../components/sign-up-form";
 import Dashboard from "../views/dashboard";
 import InterviewCreateUpdate from "../views/interviewCreateUpdate";
 import Interviews from "../views/interviews";
@@ -7,6 +8,7 @@ import StudentUpdateForm from "../views/studentUpdateForm";
 
 const PathAuth = {
   Login: "/login",
+  Register: "register",
   ForgotPassword: "/forgot-password",
   ResetPassword: "/reset-password",
   SuccessEmail: "/success-email",
@@ -76,6 +78,12 @@ const PublicRoutes = [
     element: <Login />,
     path: Path.Login,
     name: "Login",
+    subRoute: [],
+  },
+  {
+    element: <Register />,
+    path: Path.Register,
+    name: "Register",
     subRoute: [],
   },
 ];

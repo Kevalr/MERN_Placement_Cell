@@ -43,13 +43,14 @@ const signIn = async (req, res) => {
       user.password
     );
     if (!validPassword) {
-      return res.status(404).json({
+      return res.status(401).json({
         message: "Invalid password",
       });
     }
     const token = jwt.sign(
       { id: user._id },
-      process.env.JWT_SECRET || "nothing"
+      process.env.JWT_SECRET || "nothing",
+      { expiresIn: "1d" }
     );
     res.status(200).json({
       message: "User signed in Successfully",

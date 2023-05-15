@@ -3,8 +3,8 @@ import { toast } from "react-toastify";
 
 import { removeSession } from "../utils/helper";
 
-const baseURL = "https://mern-placement-cell-backend.vercel.app/";
-// const baseURL = "http://localhost:3500/";
+// const baseURL = "https://mern-placement-cell-backend.vercel.app/";
+const baseURL = "http://localhost:3500/";
 
 const axiosClient = axios.create({
   baseURL,
@@ -13,7 +13,7 @@ const axiosClient = axios.create({
 axiosClient.interceptors.request.use(
   function (config) {
     const session = JSON.parse(localStorage.getItem("session")) || {};
-    const accessToken = session.accessToken;
+    const accessToken = session.token;
 
     return {
       ...config,
@@ -40,9 +40,14 @@ axiosClient.interceptors.response.use(
     if (status === 401 && config.url !== "/auth/login") {
       removeSession();
       window.location.replace("/login");
+      toast.error("Invalid Crediantials");
       return axios(config);
     } else if (status === 403) {
       toast.error("You don't have permission to perform this action");
+    } else if (status === 404) {
+      toast.error("Invalid Password");
+    } else if (status === 409) {
+      toast.error("User with this e-mail is Already exists");
     } else {
       toast.error(data?.message || "Something went wrong");
     }

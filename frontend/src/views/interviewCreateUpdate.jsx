@@ -14,24 +14,7 @@ import StudentsModal from "../components/studentsModal";
 import StudentSelectForm from "../components/studentSelectForm";
 import { invalidateQuery } from "../config/react-query-client";
 import { toast } from "react-toastify";
-
-const Input = ({ label, name, register, required, placeholder }) => (
-  <>
-    <div className="w-full px-4">
-      <div className="relative w-full mb-3">
-        <label className="block uppercase text-blueGray-600 text-sm font-bold mb-2">
-          {label}
-        </label>
-        <input
-          type="text"
-          className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-          {...register(name, { required })}
-          placeholder={placeholder || `Enter ${label}`}
-        />
-      </div>
-    </div>
-  </>
-);
+import Input from "../components/common/Input";
 
 const InterviewCreateUpdate = () => {
   //Fetching id from the state using location
@@ -77,7 +60,7 @@ const InterviewCreateUpdate = () => {
   const createArrayOfcreateRequiredTech = (requiredTechString) => {
     let requiredTech = requiredTechString.split(",");
     let finalRequiredTechList = [];
-    debugger;
+
     for (let index in requiredTech) {
       if (requiredTech[index].length > 0) {
         finalRequiredTechList.push(requiredTech[index].trim());
@@ -133,6 +116,14 @@ const InterviewCreateUpdate = () => {
           },
         }
       );
+    } else {
+      createInterview(payload, {
+        onSuccess: () => {
+          invalidateQuery("interviews");
+          toast.success("Interview Created Successfully");
+          navigate("/interviews");
+        },
+      });
     }
   };
 

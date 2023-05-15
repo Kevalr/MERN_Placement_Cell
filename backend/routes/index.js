@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const path = require("path");
+const { isAuthenticatedUser } = require("../middleware/auth");
 
 //For Testing
 router.get("/", (req, res) => res.send("<h1>Hello World</h1>"));
@@ -9,10 +10,10 @@ router.get("/", (req, res) => res.send("<h1>Hello World</h1>"));
 router.use("/users", require("./users"));
 
 //All students routes will be redirected to students routes page
-router.use("/students", require("./students"));
+router.use("/students", isAuthenticatedUser, require("./students"));
 
 //All interviews routes will be redirected to interviews routes page
-router.use("/interviews", require("./interviews"));
+router.use("/interviews", isAuthenticatedUser, require("./interviews"));
 
 //All undefine routes will into this routes and respose with 404 page
 router.all("*", (req, res) => {
