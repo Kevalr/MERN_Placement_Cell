@@ -9,7 +9,7 @@ const createInterview = (payload) =>
   axiosClient.post("interviews/create", payload);
 
 const updateInterview = (payload) =>
-  axiosClient.put(`interviews/update/${payload._id}`, payload);
+  axiosClient.put(`interviews/update/${payload.id}`, payload);
 
 const deleteInterview = (id) => axiosClient.delete(`interviews/delete/${id}`);
 

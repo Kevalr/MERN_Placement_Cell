@@ -3,7 +3,8 @@ import { toast } from "react-toastify";
 
 import { removeSession } from "../utils/helper";
 
-const baseURL = "https://placement-cell-lo18outvb-kevalr.vercel.app/";
+// const baseURL = "https://mern-placement-cell-backend.vercel.app/";
+const baseURL = "http://localhost:3500/";
 
 const axiosClient = axios.create({
   baseURL,

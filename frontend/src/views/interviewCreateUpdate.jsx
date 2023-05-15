@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { useGetInterviewByID } from "../hooks/interviews";
+import { useLocation, useNavigate } from "react-router-dom";
+import {
+  useCreateInterview,
+  useGetInterviewByID,
+  useUpdateInterview,
+} from "../hooks/interviews";
 import Loader from "../components/common/Loader";
 import { useForm, Controller } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import useModal from "../hooks/use-modal";
 import StudentsModal from "../components/studentsModal";
+import StudentSelectForm from "../components/studentSelectForm";
+import { invalidateQuery } from "../config/react-query-client";
+import { toast } from "react-toastify";
 
 const Input = ({ label, name, register, required, placeholder }) => (
   <>
@@ -31,6 +38,13 @@ const InterviewCreateUpdate = () => {
   const { state } = useLocation();
   console.log(state.id);
 
+  const navigate = useNavigate();
+
+  const { mutate: createInterview, isLoading: isInterviewCreating } =
+    useCreateInterview();
+  const { mutate: updateInterview, isLoading: isInterviewUpdating } =
+    useUpdateInterview();
+
   //fetching interview details
   const { data: interviewDetails, isFetching: isInterviewDetailsLoading } =
     useGetInterviewByID(state?.id);
@@ -48,42 +62,83 @@ const InterviewCreateUpdate = () => {
     defaultValues: {
       name: "",
       date: "",
-      requiredTechnologies: "",
+      requiredTechnogies: "",
     },
   });
 
-  const {} = useForm({
-    defaultValues: {
-      students: [],
-    },
-  });
+  const [selectedStudentList, setSelectedStudentList] = useState([]);
 
   const createRequiredTechString = (requiredTech) => {
     let result = "";
-    requiredTech.map((tech) => (result += ` ${tech}`));
+    requiredTech.map((tech) => (result += ` ${tech},`));
     return result;
+  };
+
+  const createArrayOfcreateRequiredTech = (requiredTechString) => {
+    let requiredTech = requiredTechString.split(",");
+    let finalRequiredTechList = [];
+    debugger;
+    for (let index in requiredTech) {
+      if (requiredTech[index].length > 0) {
+        finalRequiredTechList.push(requiredTech[index].trim());
+      }
+    }
+    return finalRequiredTechList;
   };
 
   const { isOpen, openModal, onRequestClose } = useModal();
 
   useEffect(() => {
-    if (!interviewDetails) {
+    if (!interviewDetails?.data) {
       return;
     }
-    console.log(interviewDetails);
     // reset function is used to reset the form data and it is provided by react-hook-form
     reset({
       name: interviewDetails.data.name,
       requiredTechnogies: createRequiredTechString(
         interviewDetails.data?.requiredTechnogies
       ),
-      date: interviewDetails.data.date,
+      date: interviewDetails?.data?.date,
     });
+    setSelectedStudentList(interviewDetails.data?.students);
   }, [interviewDetails]);
 
-  const onSubmit = (data) => console.log(data, "form data");
+  const onSubmit = (data) => {
+    // console.log(
+    //   data,
+    //   "form data",
+    //   selectedStudentList,
+    //   createArrayOfcreateRequiredTech(data.requiredTechnogies)
+    // );
+
+    const payload = {
+      name: data.name,
+      date: new Date(`${data.date}`).toISOString(),
+      requiredTechnogies: createArrayOfcreateRequiredTech(
+        data.requiredTechnogies
+      ),
+      students: selectedStudentList,
+    };
+
+    console.log(payload);
+
+    if (state.id) {
+      updateInterview(
+        { ...payload, id: state.id },
+        {
+          onSuccess: () => {
+            invalidateQuery("interviews");
+            toast.success("Interview Updated Successfully");
+            navigate("/interviews");
+          },
+        }
+      );
+    }
+  };
 
   if (isInterviewDetailsLoading) return <Loader />;
+
+  const studentSelect_Form_ID = "selectStudentForm";
 
   return (
     <section className=" py-1 bg-blueGray-50">
@@ -105,7 +160,7 @@ const InterviewCreateUpdate = () => {
                   label="Required Technologies"
                   name="requiredTechnogies"
                   register={register}
-                  placeholder="Enter Required Technologies Separated By Space"
+                  placeholder="Enter Required Technologies Separated By Comma and Space"
                 />
                 <div className="w-full px-4 flex fle justify-between items-center">
                   <div className="relative w-1/3 mb-3">
@@ -133,6 +188,7 @@ const InterviewCreateUpdate = () => {
 
                   <div className="relative w-1/3 mb-3 self-end">
                     <button
+                      type="button"
                       class="px-4 py-3 w-full bg-gray-800 hover:bg-gray-900 hover:scale-110 transition-transform ease-in-out text-white font-medium rounded-md"
                       onClick={openModal}
                     >
@@ -144,7 +200,7 @@ const InterviewCreateUpdate = () => {
                 <div className="flex justify-center w-full mt-5 ">
                   <div class="border-2 w-1/3 text-center text-lg font-bold hover:border-yellow-600 rounded-lg px-6 py-2 hover:bg-white hover:text-yellow-600 cursor-pointer bg-yellow-600 text-black">
                     <button type="submit">
-                      {state.id ? "UPDATE" : "CREATE"} STUDENT
+                      {state.id ? "UPDATE" : "CREATE"} Interview
                     </button>
                   </div>
                   {/* </div> */}
@@ -152,8 +208,20 @@ const InterviewCreateUpdate = () => {
               </div>
             </form>
           </div>
-          <StudentsModal isOpen={isOpen} onRequestClose={onRequestClose}>
-            <form></form>
+
+          <StudentsModal
+            isOpen={isOpen}
+            onRequestClose={onRequestClose}
+            submitButtonProps={{
+              form: studentSelect_Form_ID,
+            }}
+          >
+            <StudentSelectForm
+              onRequestClose={onRequestClose}
+              selectedStudentList={selectedStudentList}
+              setSelectedStudentList={setSelectedStudentList}
+              formID={studentSelect_Form_ID}
+            />
           </StudentsModal>
         </div>
       </div>

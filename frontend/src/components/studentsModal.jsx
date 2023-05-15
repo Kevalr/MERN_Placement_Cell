@@ -1,7 +1,12 @@
 import classNames from "classnames";
 import CloseIcon from "../assets/close.svg";
 
-const StudentsModal = ({ isOpen, onRequestClose, children }) => {
+const StudentsModal = ({
+  isOpen,
+  onRequestClose,
+  children,
+  submitButtonProps,
+}) => {
   return (
     <div
       className={classNames(
@@ -17,7 +22,7 @@ const StudentsModal = ({ isOpen, onRequestClose, children }) => {
         </div>
         <div
           className={classNames([
-            "inline-block bg-white left-1/2 -translate-x-1/2 transform transition-all mt-9 relative p-4 rounded-xl w-[896px] shadow-md drop-shadow-xl shadow-black",
+            "h-full inline-block bg-white left-1/2 -translate-x-1/2 transform transition-all mt-9 relative p-4 rounded-xl w-[896px] shadow-md drop-shadow-xl shadow-black",
           ])}
         >
           <button className="absolute -top-3 -right-1" onClick={onRequestClose}>
@@ -46,6 +51,7 @@ const StudentsModal = ({ isOpen, onRequestClose, children }) => {
               <button
                 className="mt-3 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
                 type="submit"
+                {...submitButtonProps}
               >
                 ADD STUDENTS
               </button>

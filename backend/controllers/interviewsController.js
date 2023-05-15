@@ -84,7 +84,6 @@ const createInterview = async (req, res) => {
 };
 
 //Can update the interview details and students status
-//update status of the students -  pass, fail, onhold, didn't attept
 const updateInterview = async (req, res) => {
   //req body will have id of the interview all the students with updated result status
   try {
@@ -112,6 +111,7 @@ const updateInterview = async (req, res) => {
   }
 };
 
+// To Delete Interview
 const deleteInterview = async (req, res) => {
   try {
     const interview = await Interview.findByIdAndDelete(req.params.id);
