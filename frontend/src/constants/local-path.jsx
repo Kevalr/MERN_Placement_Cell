@@ -16,7 +16,7 @@ const PathAuth = {
 };
 
 const PathDashboard = {
-  Dashboard: "/dashboard",
+  Dashboard: "/students",
   Interviews: "/interviews",
   StudentCreate: "/student-create",
   StudentUpdate: "/student-update/:id",

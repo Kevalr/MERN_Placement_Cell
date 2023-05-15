@@ -21,19 +21,16 @@ const Header = () => {
 
   return (
     <>
-      <header className="fixed h-20 bg-gray-100 px-5 py-4 flex w-[calc(100%_-_8rem)]">
+      <header className="items-center fixed h-20 bg-blue-300 px-5 py-4 flex w-[calc(100%_-_8rem)]">
         <div className="w-2/5 flex items-center">
           <p className="text-2xl font-semibold text-black-light">
             Admin Panel - RK Ninjas - Placement cell
           </p>
         </div>
-        <div className="flex w-3/5 justify-evenly items-center">
-          <p></p>
-          <p></p>
-          <p></p>
+        <div className="flex w-3/5 justify-end mr-16 items-center">
           <button
             type="button"
-            className="place-self-end text-white bg-[#050708] hover:bg-[#050708]/80 focus:ring-4 focus:outline-none focus:ring-[#050708]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-[#050708]/40 dark:focus:ring-gray-600 mr-2 mb-2"
+            className="text-white bg-[#050708] hover:bg-[#050708]/80 focus:ring-4 focus:outline-none focus:ring-[#050708]/50 font-medium rounded-lg text-sm px-6 py-2.5 text-center inline-flex items-center dark:hover:bg-[#050708]/40 dark:focus:ring-gray-600 mr-2 mb-2"
             onClick={handleLogout}
           >
             Logout
