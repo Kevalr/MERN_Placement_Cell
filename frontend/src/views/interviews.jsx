@@ -73,7 +73,7 @@ const Interviews = () => {
                       Date
                     </th>
                     <th scope="col" className="px-6 py-4">
-                      Students
+                      Students Status
                     </th>
                     <th scope="col" className="px-6 py-4">
                       Actions
@@ -102,7 +102,9 @@ const Interviews = () => {
                           openModal();
                         }}
                       >
-                        {"View Students"}
+                        <span className="inline-block bg-gray-900 hover:bg-white border hover:border-gray-900 transition-all ease-in-out duration-300 hover:text-gray-900 text-white px-3 py-2 text-md rounded-lg capitalize cursor-pointer font-semibold">
+                          change Students status
+                        </span>
                       </td>
                       <td className="whitespace-nowrap px-6 py-4">
                         <img
@@ -134,7 +136,7 @@ const Interviews = () => {
                 <StudentsModal
                   isOpen={isOpen}
                   onRequestClose={onRequestClose}
-                  submitButtonProps={{ form_id: changeStudentStatusFormID }}
+                  submitButtonProps={{ form: changeStudentStatusFormID }}
                   title="Update Student Status"
                 >
                   <UpdateInterviewStudentStatusForm
