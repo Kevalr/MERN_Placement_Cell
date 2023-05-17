@@ -5,6 +5,11 @@ const interviewsController = require("../controllers/interviewsController");
 // Get All Interview List
 router.get("/", interviewsController.getInterviewsList);
 
+router.get(
+  "/detailedInterviewReport",
+  interviewsController.getDetailedInterviewReport
+);
+
 router
   // Get Single Interview by id
   .get("/:id", interviewsController.getInterviewByID)

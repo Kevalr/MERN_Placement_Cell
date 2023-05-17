@@ -133,9 +133,44 @@ const deleteInterview = async (req, res) => {
   }
 };
 
+const getDetailedInterviewReport = async (req, res) => {
+  try {
+    const interviewList = await Interview.find({})
+      .select({
+        name: 1,
+        date: 1,
+        requiredTechnogies: 1,
+        students: 1,
+      })
+      .populate({
+        path: "students.id",
+        model: "Student",
+        select: {
+          name: 1,
+          collage: 1,
+          status: 1,
+          score: 1,
+        },
+      });
+
+    // .populate({
+    //   path: "students.id",
+    //   model: "Student",
+    //   select: {
+    //     name: 1,
+    //     collage: 1,
+    //   },
+    // });
+    res.send(interviewList);
+  } catch (error) {
+    res.send({ message: "Error while getting detailed interview report" });
+  }
+};
+
 module.exports = {
   getInterviewsList,
   getInterviewByID,
+  getDetailedInterviewReport,
   createInterview,
   updateInterview,
   deleteInterview,
