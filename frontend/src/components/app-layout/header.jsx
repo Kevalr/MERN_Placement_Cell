@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Path from "../../constants/local-path";
 
 import { removeSession, getSession } from "../../utils/helper";
+import DownloadCSV from "../download-CSV";
 
 const Header = () => {
   const user = getSession().user;
@@ -28,9 +29,10 @@ const Header = () => {
           </p>
         </div>
         <div className="flex w-3/5 justify-end mr-16 items-center">
+          <DownloadCSV />
           <button
             type="button"
-            className="text-white bg-[#050708] hover:bg-[#050708]/80 focus:ring-4 focus:outline-none focus:ring-[#050708]/50 font-medium rounded-lg text-sm px-6 py-2.5 text-center inline-flex items-center dark:hover:bg-[#050708]/40 dark:focus:ring-gray-600 mr-2 mb-2"
+            className="ml-10 text-white bg-[#050708] hover:bg-[#050708]/80 focus:ring-4 focus:outline-none focus:ring-[#050708]/50 font-medium rounded-lg text-sm px-6 py-2.5 text-center inline-flex items-center dark:hover:bg-[#050708]/40 dark:focus:ring-gray-600 mr-2"
             onClick={handleLogout}
           >
             Logout

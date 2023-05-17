@@ -5,6 +5,7 @@ import {
   getAllInterviews,
   getInterviewByID,
   updateInterview,
+  getDetailedInterviews,
 } from "../services/interviews";
 
 export const useGetAllInterviews = () =>
@@ -22,3 +23,6 @@ export const useCreateInterview = () => useMutation(createInterview);
 export const useUpdateInterview = () => useMutation(updateInterview);
 
 export const useDeleteInterview = () => useMutation(deleteInterview);
+
+export const useGetDetailedInterviews = () =>
+  useQuery(["detailed-interviews"], getDetailedInterviews);

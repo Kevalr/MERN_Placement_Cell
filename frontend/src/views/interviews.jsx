@@ -10,6 +10,7 @@ import { useDeleteInterview, useGetAllInterviews } from "../hooks/interviews";
 import useModal from "../hooks/use-modal";
 import StudentsModal from "../components/studentsModal";
 import UpdateInterviewStudentStatusForm from "../components/updateInterviewStudentStatus";
+import DownloadCSV from "../components/download-CSV";
 const Interviews = () => {
   const navigate = useNavigate();
 
