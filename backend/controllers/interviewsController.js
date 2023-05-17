@@ -149,7 +149,7 @@ const getDetailedInterviewReport = async (req, res) => {
           name: 1,
           collage: 1,
           status: 1,
-          score: 1,
+          scores: 1,
         },
       });
 
